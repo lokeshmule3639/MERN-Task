@@ -186,7 +186,8 @@ function App() {
       fetchHistory();
     } catch (error) {
       console.error('Error saving to DB:', error);
-      alert('Failed to save to database.');
+      const errorMsg = error.response?.data?.error || error.message;
+      alert(`Failed to save to database: ${errorMsg}`);
     }
   };
 
