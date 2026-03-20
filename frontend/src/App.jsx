@@ -13,7 +13,7 @@ import './App.css';
 import axios from 'axios';
 import { Play, Save, History, Loader2 } from 'lucide-react';
 
-const API_BASE_URL = window.location.origin === 'http://localhost:5173' 
+const API_BASE_URL = window.location.hostname === 'localhost' 
   ? 'http://localhost:5000/api' 
   : '/api';
 
