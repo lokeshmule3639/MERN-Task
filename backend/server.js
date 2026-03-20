@@ -70,13 +70,19 @@ app.post('/api/save', async (req, res) => {
     return res.status(400).json({ error: 'Prompt and response are required' });
   }
 
+  // Check if DB is connected
+  if (mongoose.connection.readyState !== 1) {
+    console.error('Database not connected. ReadyState:', mongoose.connection.readyState);
+    return res.status(503).json({ error: 'Database connection is not ready' });
+  }
+
   try {
     const newPrompt = new PromptModel({ prompt, response });
     await newPrompt.save();
     res.json({ message: 'Data saved successfully', data: newPrompt });
   } catch (error) {
-    console.error('MongoDB save error:', error);
-    res.status(500).json({ error: 'Failed to save data' });
+    console.error('Detailed MongoDB save error:', error.message);
+    res.status(500).json({ error: `Failed to save data: ${error.message}` });
   }
 });
 
